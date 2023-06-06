@@ -1,0 +1,32 @@
+﻿
+@{
+    foreach (var file in Model)
+    {
+        <div class="col-8 col-sm-6">
+            <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="50%" height="100" role="img"
+                     aria-label="Placeholder: Типо фотка дока">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="5%" y="50%" fill="#eceeef" dy=".3em">Типо фотка дока</text>
+                </svg>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Название файла: @file.Filename</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-centre">
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-arrow-bar-down"></i>
+                    Скачать
+                </button>
+                <small class="text-body-secondary">9 mins</small>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                    <i class="bi bi-trash"></i>
+                    В корзину
+                </button>
+            </div>
+        </div>
+    }
+}
+
+
