@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PrimeStore.Data.Models;
 
-public partial class User
+public partial class User : IdentityUser
 {
-    public int Id { get; set; }
+    public override string Id { get; set; }  
 
     public string Login { get; set; } = null!;
 

@@ -11,7 +11,7 @@ public partial class Folder
 
     public DateTime CreationTime { get; set; }
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     public int[]? IdNextFolder { get; set; }
 

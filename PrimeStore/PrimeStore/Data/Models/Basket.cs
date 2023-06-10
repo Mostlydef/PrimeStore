@@ -9,7 +9,7 @@ public partial class Basket
 
     public string Path { get; set; } = null!;
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     public int[]? IdPreviousFolder { get; set; }
 
