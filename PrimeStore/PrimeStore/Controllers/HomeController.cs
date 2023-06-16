@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PrimeStore.Data.Interfaces;
 
 namespace PrimeStore.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IAllFile _iAllFile;

@@ -5,7 +5,7 @@ namespace PrimeStore.Data.Models;
 
 public partial class SharedFolder
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     public int FolderId { get; set; }
 

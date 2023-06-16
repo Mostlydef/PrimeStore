@@ -1,17 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PrimeStore.Data.Models;
 
 namespace PrimeStore.Data;
 
-public partial class PrimeStoreContext : DbContext
+public partial class PrimeStoreContext : IdentityDbContext<User>
 {
     public PrimeStoreContext()
     {
+        
     }
 
     public PrimeStoreContext(DbContextOptions<PrimeStoreContext> options)
         : base(options)
     {
+       
     }
 
     public virtual DbSet<Basket> Baskets { get; set; }
@@ -32,6 +36,8 @@ public partial class PrimeStoreContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Basket>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("basket_pkey");
@@ -159,9 +165,7 @@ public partial class PrimeStoreContext : DbContext
             entity.HasIndex(e => e.Login, "users_login_key").IsUnique();
 
             entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasIdentityOptions(null, null, 0L, null, null, null)
-                .HasColumnName("id");
+                .HasColumnName("Id");
             entity.Property(e => e.Login)
                 .HasMaxLength(16)
                 .HasColumnName("login");
@@ -172,7 +176,6 @@ public partial class PrimeStoreContext : DbContext
                 .HasMaxLength(32)
                 .HasColumnName("username");
         });
-
         OnModelCreatingPartial(modelBuilder);
     }
 
