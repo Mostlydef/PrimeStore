@@ -7,6 +7,8 @@ using PrimeStore.Data.Repositiory;
 using PrimeStore.Data.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Net;
+using PrimeStore.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
 });
 builder.Services.AddTransient<IAllFile, HomeRepository>();
+builder.Services.AddTransient<IAllFolder, HomeRepository>();
 var app = builder.Build();
 
 app.UseDeveloperExceptionPage();

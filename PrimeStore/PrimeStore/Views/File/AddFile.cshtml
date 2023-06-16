@@ -1,0 +1,17 @@
+﻿@model FileViewModel
+
+<main class="row">
+    <form asp-controller="File" asp-action="AddFile" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="col-md-8 mx-auto mt-2">
+            <h1 class="display-6">Добавление файла</h1>
+                <span asp-validation-for="FormFile"></span>
+                <input class="form-control" asp-for="FormFile" type="file">
+            </div>
+        <div class="col-md-8 mx-auto mt-2">
+                <input asp-page-handler="Добавить" class="btn btn-outline-primary" type="submit" value="Upload">
+            </div>
+    </form>
+</main>
+@section Footer{
+}

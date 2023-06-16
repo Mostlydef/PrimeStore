@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
+using PrimeStore.Data.Interfaces;
 using PrimeStore.Data.Models;
 using PrimeStore.ViewModels;
 
@@ -10,11 +11,13 @@ namespace PrimeStore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IAllFolder _allFolder;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IAllFolder allFolder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _allFolder = allFolder;
         }
 
         [HttpGet]
@@ -35,12 +38,21 @@ namespace PrimeStore.Controllers
                     Password = model.Password,
                     UserName = model.Username
                 };
+                
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
+                    string check = user.Id;
+                    _allFolder.Folder = new Folder
+                    {
+                        Foldername = "root",
+                        CreationTime = DateTime.Now,
+                        UserId = user.Id,
+                        InBasket = false
+                    };
                     return RedirectToAction("Index", "Home");
                 }
                 else

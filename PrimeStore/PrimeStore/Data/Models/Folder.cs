@@ -17,6 +17,8 @@ public partial class Folder
 
     public int[]? IdPreviousFolder { get; set; }
 
+    public bool InBasket { get; set; }
+
     public virtual ICollection<File> Files { get; set; } = new List<File>();
 
     public virtual User User { get; set; } = null!;

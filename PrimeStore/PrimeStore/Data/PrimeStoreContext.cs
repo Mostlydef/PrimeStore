@@ -9,16 +9,14 @@ public partial class PrimeStoreContext : IdentityDbContext<User>
 {
     public PrimeStoreContext()
     {
-        
+       // Database.EnsureDeleted();
     }
 
     public PrimeStoreContext(DbContextOptions<PrimeStoreContext> options)
         : base(options)
     {
-       
+        //Database.EnsureDeleted();
     }
-
-    public virtual DbSet<Basket> Baskets { get; set; }
 
     public virtual DbSet<Models.File> Files { get; set; }
 
@@ -38,55 +36,28 @@ public partial class PrimeStoreContext : IdentityDbContext<User>
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Basket>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("basket_pkey");
-
-            entity.ToTable("basket");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasIdentityOptions(null, null, 0L, null, null, null)
-                .HasColumnName("id");
-            entity.Property(e => e.IdPreviousFolder).HasColumnName("id_previous_folder");
-            entity.Property(e => e.Path)
-                .HasMaxLength(128)
-                .HasColumnName("path");
-            entity.Property(e => e.UserId).HasColumnName("user_id");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Baskets)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("fk_user_id");
-        });
-
         modelBuilder.Entity<Models.File>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("files_pkey");
 
             entity.ToTable("files");
 
-            entity.HasIndex(e => e.Filename, "files_filename_key").IsUnique();
-
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasIdentityOptions(null, null, 0L, null, null, null)
                 .HasColumnName("id");
-            entity.Property(e => e.BasketId).HasColumnName("basket_id");
             entity.Property(e => e.Data).HasColumnName("data");
             entity.Property(e => e.Filename)
-                .HasMaxLength(16)
+                .HasMaxLength(128)
                 .HasColumnName("filename");
             entity.Property(e => e.FolderId).HasColumnName("folder_id");
             entity.Property(e => e.Size)
-                .HasMaxLength(5)
+                .HasMaxLength(128)
                 .HasColumnName("size");
             entity.Property(e => e.UploadTime)
                 .HasColumnType("timestamp(6) without time zone")
                 .HasColumnName("upload_time");
-
-            entity.HasOne(d => d.Basket).WithMany(p => p.Files)
-                .HasForeignKey(d => d.BasketId)
-                .HasConstraintName("fk_basket_id");
+            entity.Property(e => e.InBasket).HasColumnName("in_basket");
 
             entity.HasOne(d => d.Folder).WithMany(p => p.Files)
                 .HasForeignKey(d => d.FolderId)
@@ -98,8 +69,6 @@ public partial class PrimeStoreContext : IdentityDbContext<User>
             entity.HasKey(e => e.Id).HasName("folder_pkey");
 
             entity.ToTable("folder");
-
-            entity.HasIndex(e => e.Foldername, "folder_foldername_key").IsUnique();
 
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
@@ -114,6 +83,7 @@ public partial class PrimeStoreContext : IdentityDbContext<User>
             entity.Property(e => e.IdNextFolder).HasColumnName("id_next_folder");
             entity.Property(e => e.IdPreviousFolder).HasColumnName("id_previous_folder");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.InBasket).HasColumnName("in_basket");
 
             entity.HasOne(d => d.User).WithMany(p => p.Folders)
                 .HasForeignKey(d => d.UserId)
