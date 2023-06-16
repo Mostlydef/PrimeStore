@@ -15,7 +15,5 @@ public partial class User : IdentityUser
 
     public string Username { get; set; } = null!;
 
-    public virtual ICollection<Basket> Baskets { get; set; } = new List<Basket>();
-
     public virtual ICollection<Folder> Folders { get; set; } = new List<Folder>();
 }

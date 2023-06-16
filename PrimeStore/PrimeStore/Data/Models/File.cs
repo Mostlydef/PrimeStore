@@ -9,17 +9,15 @@ public partial class File
 
     public int FolderId { get; set; }
 
-    public int BasketId { get; set; }
-
     public string Size { get; set; } = null!;
 
     public DateTime UploadTime { get; set; }
 
-    public byte[][] Data { get; set; } = null!;
+    public byte[] Data { get; set; } = null!;
 
     public string? Filename { get; set; }
 
-    public virtual Basket Basket { get; set; } = null!;
+    public bool InBasket { get; set; }
 
     public virtual Folder Folder { get; set; } = null!;
 }
