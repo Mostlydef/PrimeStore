@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using PrimeStore.Data.Interfaces;
 using PrimeStore.Data.Models;
+using System.Net.Mime;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PrimeStore.Controllers
 {
@@ -31,5 +34,20 @@ namespace PrimeStore.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpPost]
+        public IActionResult DownloadFile(int id = -1)
+        {
+            if (id != -1)
+            {
+                var file = _iAllFile.GetFileData(id);
+                var fileProvider = new FileExtensionContentTypeProvider();
+                string filePath = Path.Combine(Syroot.Windows.IO.KnownFolders.Downloads.Path,
+                file.Filename);
+                var memoryStream = new MemoryStream(file.Data);
+                fileProvider.TryGetContentType(file.Filename, out string contentType);
+                return File(memoryStream, contentType, Path.GetFileName(filePath));
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
