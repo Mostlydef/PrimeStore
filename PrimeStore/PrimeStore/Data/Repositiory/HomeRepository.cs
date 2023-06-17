@@ -61,5 +61,11 @@ namespace PrimeStore.Data.Repositiory
             }
             return false;
         }
+
+        public Models.File GetFileData(int id)
+        {
+            Models.File file = _context.Files.FirstOrDefault(p => p.Id == id);
+            return file;
+        }
     }
 }
