@@ -13,12 +13,12 @@
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a href="#" class="nav-link active">
-                        <i class="bi bi-trash"></i>
+                        <i class="bi bi-archive"></i>
                         Файлы
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link link-body-emphasis">
+                    <a href="/File/Basket" class="nav-link link-body-emphasis">
                         <i class="bi bi-trash"></i>
                         Корзина
                     </a>
@@ -48,7 +48,7 @@
             @{
                 foreach (var file in Model)
                 {
-                    if(file.InBasket == false)
+                    if (file.InBasket == false)
                     {
                         <div class="row mt-4">
                             <div class="col-sm-1">
@@ -69,15 +69,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-arrow-bar-down"></i>
-                                    Скачать
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-trash"></i>
-                                    В корзину
-                                </button>
+                            <div class="col-auto ml-5 p-0">
+                                
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-arrow-bar-down"></i>
+                                        Скачать
+                                    </button>
+                                
+                                </div>
+                            <div class="col-auto">
+                                <form asp-controller="Home" asp-action="GetFileInBasket" asp-route-id=@file.Id>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-trash"></i>
+                                        В корзину
+                                    </button>
+                                </form>
                             </div>
                         </div>
                         <hr>
@@ -87,6 +93,5 @@
         </main>
     </div>
 </div>
-<script src="~/js/bootstrap.min.js"></script>
 
 
