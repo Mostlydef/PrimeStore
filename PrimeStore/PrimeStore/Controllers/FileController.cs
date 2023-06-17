@@ -2,10 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PrimeStore.Data.Interfaces;
 using PrimeStore.ViewModels;
-using PrimeStore.Data.Models;
-using System.IO;
-using Npgsql.PostgresTypes;
-using Npgsql;
 
 namespace PrimeStore.Controllers
 {
@@ -14,6 +10,8 @@ namespace PrimeStore.Controllers
 
         private readonly IAllFile _allFile;
         private readonly IAllFolder _allFolder;
+        private string[] permittedExtensions = { ".txt", ".pdf", ".doc", ".docx" };
+
 
         public FileController(IAllFile allFile, IAllFolder allFolder)
         {
@@ -25,6 +23,14 @@ namespace PrimeStore.Controllers
         {
             if (fileModel.FormFile != null)
             {
+
+                var ext = Path.GetExtension(fileModel.FormFile.FileName).ToLowerInvariant();
+
+                if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                {
+                    ModelState.AddModelError("", "Данный формат файла не поддерживается.");
+                    return View(fileModel);
+                }
                 byte[] buffer = null;
                 using (var binaryReader = new BinaryReader(fileModel.FormFile.OpenReadStream()))
                 {
