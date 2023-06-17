@@ -9,5 +9,7 @@ namespace PrimeStore.Data.Interfaces
         public Models.File File { set; }
 
         public bool SetFileInBasket(int id);
+        public bool RemoveFileFromBasket(int id);
+        public bool RemoveFile(int id);
     }
 }
