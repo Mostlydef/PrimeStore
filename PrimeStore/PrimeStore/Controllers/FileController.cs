@@ -44,27 +44,30 @@ namespace PrimeStore.Controllers
             return View(fileModel);
         }
 
-        public async Task<IActionResult> DeleteFile(FileViewModel fileModel)
+        public ViewResult Basket()
         {
-            if (fileModel.FormFile != null)
+            var allFile = _allFile.Files;
+            return View(allFile);
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFileFromBasket(int id = -1)
+        {
+            if (id != -1)
             {
-                byte[] buffer = null;
-                using (var binaryReader = new BinaryReader(fileModel.FormFile.OpenReadStream()))
-                {
-                    buffer = binaryReader.ReadBytes((int)fileModel.FormFile.Length);
-                    _allFile.File = new Data.Models.File
-                    {
-                        Data = buffer,
-                        Filename = fileModel.FormFile.FileName,
-                        UploadTime = DateTime.Now,
-                        FolderId = (int)(_allFolder.Folders.FirstOrDefault()?.Id),
-                        Size = fileModel.FormFile.Length.ToString(),
-                        InBasket = false
-                    };
-                }
-                return RedirectToAction("Index", "Home");
+                _allFile.RemoveFileFromBasket(id);
             }
-            return View(fileModel);
+            return RedirectToAction("Basket", "File");
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFile(int id = -1)
+        {
+            if (id != -1)
+            {
+                _allFile.RemoveFile(id);
+            }
+            return RedirectToAction("Basket", "File");
         }
     }
 }

@@ -4,7 +4,7 @@ using PrimeStore.Data.Models;
 
 namespace PrimeStore.Data.Repositiory
 {
-    public class HomeRepository : IAllFile, IAllFolder
+    public class HomeRepository : IAllFile
     {
         private readonly PrimeStoreContext _context;
 
@@ -14,23 +14,6 @@ namespace PrimeStore.Data.Repositiory
         }
 
         public IEnumerable<Models.File> Files => _context.Files.Include(c => c.Folder);
-
-        public IEnumerable<Folder> Folders
-        {
-            get
-            {
-                return _context.Folders.Include(c => c.User);
-            }
-        }
-
-        public Folder Folder
-        {
-            set
-            {
-                _context.Folders.Add(value);
-                _context.SaveChanges();
-            }
-        }
 
         public Models.File File
         {
@@ -48,6 +31,31 @@ namespace PrimeStore.Data.Repositiory
             {
                 file.InBasket = true;
                 _context.Files.Update(file);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveFileFromBasket(int id)
+        {
+            Models.File file = _context.Files.FirstOrDefault(p => p.Id == id);
+            if (file != null)
+            {
+                file.InBasket = false;
+                _context.Files.Update(file);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemoveFile(int id)
+        {
+            Models.File file = _context.Files.FirstOrDefault(p => p.Id == id);
+            if (file != null)
+            {
+                _context.Files.Remove(file);
                 _context.SaveChanges();
                 return true;
             }

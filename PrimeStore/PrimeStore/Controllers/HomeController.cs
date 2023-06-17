@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PrimeStore.Data.Interfaces;
+using PrimeStore.Data.Models;
 
 namespace PrimeStore.Controllers
 {
@@ -19,5 +20,16 @@ namespace PrimeStore.Controllers
             var allFile = _iAllFile.Files;
             return View(allFile);
         }
+
+        [HttpPost]
+        public IActionResult GetFileInBasket(int id = -1)
+        {
+            if (id != -1)
+            {
+                _iAllFile.SetFileInBasket(id);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
