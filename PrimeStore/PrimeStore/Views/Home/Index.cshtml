@@ -70,12 +70,12 @@
                                 </div>
                             </div>
                             <div class="col-auto ml-5 p-0">
-                                
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                                <form asp-controller="Home" asp-action="DownloadFile" asp-route-id=@file.Id>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
                                         <i class="bi bi-arrow-bar-down"></i>
                                         Скачать
                                     </button>
-                                
+                                </form>
                                 </div>
                             <div class="col-auto">
                                 <form asp-controller="Home" asp-action="GetFileInBasket" asp-route-id=@file.Id>
