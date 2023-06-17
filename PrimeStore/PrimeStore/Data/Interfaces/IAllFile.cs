@@ -11,5 +11,7 @@ namespace PrimeStore.Data.Interfaces
         public bool SetFileInBasket(int id);
         public bool RemoveFileFromBasket(int id);
         public bool RemoveFile(int id);
+
+        public Models.File GetFileData(int id);
     }
 }
