@@ -28,7 +28,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
 });
 builder.Services.AddTransient<IAllFile, HomeRepository>();
-builder.Services.AddTransient<IAllFolder, HomeRepository>();
+builder.Services.AddTransient<IAllFolder, FolderRepository>();
 var app = builder.Build();
 
 app.UseDeveloperExceptionPage();
