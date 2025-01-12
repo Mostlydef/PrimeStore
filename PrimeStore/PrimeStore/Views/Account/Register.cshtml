@@ -1,0 +1,33 @@
+﻿@model RegisterViewModel
+@section Header{}
+<main class="form-signin position-absolute top-50 start-50 translate-middle mt-2 m-2">
+    <form method="post" asp-controller="Account" asp-action="Register">
+        <div asp-validation-summary="ModelOnly"></div>
+        <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" asp-for="Username">
+            <label for="floatingInput">Имя пользователя</label>
+            <span asp-validation-for="Username"></span>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="floatingInput" asp-for="Login">
+            <label for="floatingInput">Логин</label>
+            <span asp-validation-for="Login"></span>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password">
+            <label for="floatingPassword">Пароль</label>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="PasswordConfirm">
+            <label for="floatingPassword">Подтверждение пароля</label>
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Зарегистрироваться</button>
+        <p class="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
+    </form>
+</main>
+@section Footer{}

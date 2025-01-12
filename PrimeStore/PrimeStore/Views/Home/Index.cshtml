@@ -1,0 +1,97 @@
+﻿@model IEnumerable<File>
+<div class="container-fluid">
+    <div class="row gy-2">
+        <div class="sidebar col flex-shrink-0 p-3 bg-body-tertiary" style="width: 280px;">
+            <hr>
+            <div class="d-grid gap-2 col-8 mx-auto">
+                <a href="/File/AddFile" class="btn btn-outline-primary" aria-current="page">
+                    <i class="bi bi-plus-lg"></i>
+                    Добавить
+                </a>
+            </div>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">
+                        <i class="bi bi-archive"></i>
+                        Файлы
+                    </a>
+                </li>
+                <li>
+                    <a href="/File/Basket" class="nav-link link-body-emphasis">
+                        <i class="bi bi-trash"></i>
+                        Корзина
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-body-emphasis">
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-body-emphasis">
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link link-body-emphasis">
+                        <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                        Customers
+                    </a>
+                </li>
+            </ul>
+            <hr>
+        </div>
+        <main class="col-sm-10">
+            @{
+                foreach (var file in Model)
+                {
+                    if (file.InBasket == false)
+                    {
+                        <div class="row mt-4">
+                            <div class="col-sm-1">
+                                <img src="~/img/doc.png" class="bd-placeholder-img card-img-top" width="50" height="50">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @file.Filename
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <small class="text-body-secondary">@file.UploadTime.ToString()</small>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <small class="text-body-secondary">@file.Size</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto ml-5 p-0">
+                                <form asp-controller="Home" asp-action="DownloadFile" asp-route-id=@file.Id>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-arrow-bar-down"></i>
+                                        Скачать
+                                    </button>
+                                </form>
+                                </div>
+                            <div class="col-auto">
+                                <form asp-controller="Home" asp-action="GetFileInBasket" asp-route-id=@file.Id>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-trash"></i>
+                                        В корзину
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    }
+                }
+            }
+        </main>
+    </div>
+</div>
+
+
